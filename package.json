@@ -1,0 +1,16 @@
+{
+  "name": "vigil-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "groq-sdk": "^0.7.0",
+    "next": "^16.1.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

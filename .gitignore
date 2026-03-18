@@ -1,5 +1,5 @@
 node_modules/
-package-lock.json
-package.json
-vigil-web/
+.next/
 .env.local
+.env
+*.env
