@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'VIGIL — Neural Intelligence Interface',
-  description: 'An AI that never sleeps. Built from scratch.',
+  title: 'VIGIL',
+  description: 'Neural intelligence. Always on.',
 }
 
 export default function RootLayout({ children }) {
