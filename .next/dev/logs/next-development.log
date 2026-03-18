@@ -1,0 +1,358 @@
+[00:00:00.943] Server  LOG     ✓ Ready in 623ms
+[00:00:07.526] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:12:34.410] Server  LOG     ✓ Compiled in 39ms
+[00:12:35.330] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:12:35.330] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:12:35.330] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:12:35.330] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:03.522] Server  LOG     ✓ Compiled in 14ms
+[00:13:04.472] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:04.472] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:04.472] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:04.472] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:27.314] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:27.314] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:27.314] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:27.314] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:53.369] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:53.369] Browser ERROR   ./app/page.js:4:1
+Export MODELS doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export MODELS was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import SUGGESTIONS?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:53.369] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-client] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:13:53.369] Browser ERROR   ./app/page.js:4:1
+Export exportMarkdown doesn't exist in target module
+  2 | import { useState, useRef, useEffect, useCallback } from 'react'
+  3 | import MessageContent from '../components/MessageContent'
+> 4 | import { uid, formatTime, truncate, exportMarkdown, MODELS, SUGGESTIONS } from '../lib/utils'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | /* ─── Animated background grid ──────────────────────────────────────────── */
+  7 | function GridBackground() {
+
+The export exportMarkdown was not found in module [project]/lib/utils.js [app-ssr] (ecmascript).
+Did you mean to import parseBold?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/page.js [Client Component Browser]
+    ./app/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/page.js [Client Component SSR]
+    ./app/page.js [Server Component]
+[00:14:49.192] Server  LOG     ✓ Compiled in 7ms
+[00:15:03.415] Server  LOG     ✓ Compiled in 7ms
