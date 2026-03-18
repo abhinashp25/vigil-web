@@ -1,66 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --bg:         #080912;
-  --bg2:        #0d0e1a;
-  --glass:      rgba(255,255,255,0.04);
-  --glass2:     rgba(255,255,255,0.07);
-  --glass3:     rgba(255,255,255,0.11);
-  --glassbd:    rgba(255,255,255,0.09);
-  --glassbd2:   rgba(255,255,255,0.15);
-  --acc:        #7b68ee;
-  --acc2:       #9d8fff;
-  --accs:       rgba(123,104,238,0.18);
-  --accs2:      rgba(123,104,238,0.32);
-  --pink:       #e879f9;
-  --teal:       #2dd4bf;
-  --amber:      #fbbf24;
-  --t1:         #f2f2ff;
-  --t2:         #a0a0c0;
-  --t3:         #50507a;
-  --t4:         #22223a;
-  --green:      #34d399;
-  --red:        #f87171;
-  --r-sm:       8px;
-  --r-md:       14px;
-  --r-lg:       20px;
-  --r-xl:       28px;
-  --blur:       blur(24px);
-  --blur2:      blur(40px);
-  --shadow:     0 8px 32px rgba(0,0,0,0.4);
-  --shadow2:    0 24px 64px rgba(0,0,0,0.6);
+  --bg:      #0a0a10;
+  --bg2:     #0f0f18;
+  --bg3:     #14142a;
+  --glass:   rgba(255,255,255,0.04);
+  --glass2:  rgba(255,255,255,0.07);
+  --glassbd: rgba(255,255,255,0.08);
+  --acc:     #7b68ee;
+  --acc2:    #9d8fff;
+  --accs:    rgba(123,104,238,0.15);
+  --accs2:   rgba(123,104,238,0.28);
+  --t1:      #f0f0fa;
+  --t2:      #9090b8;
+  --t3:      #48486a;
+  --t4:      #202038;
+  --green:   #34d399;
+  --red:     #f87171;
+  --r-sm:    8px;
+  --r-md:    12px;
+  --r-lg:    18px;
+  --r-xl:    26px;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-html,body{
-  height:100%;
-  background:var(--bg);
-  color:var(--t1);
-  font-family:'Inter',-apple-system,sans-serif;
-  font-size:14px;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  overflow:hidden;
-}
-
-::-webkit-scrollbar{width:4px}
+html,body{height:100%;background:var(--bg);color:var(--t1);font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow:hidden}
+::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(123,104,238,0.3);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(123,104,238,0.55)}
-::selection{background:rgba(123,104,238,0.35);color:var(--t1)}
+::-webkit-scrollbar-thumb{background:rgba(123,104,238,0.25);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(123,104,238,0.5)}
+::selection{background:rgba(123,104,238,0.3);color:var(--t1)}
 
-@keyframes fadeUp    {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp    {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn    {from{opacity:0}to{opacity:1}}
 @keyframes blink     {0%,100%{opacity:1}50%{opacity:0}}
-@keyframes dot       {0%,100%{opacity:.15;transform:scale(.55)}50%{opacity:1;transform:scale(1.3)}}
+@keyframes dot       {0%,100%{opacity:.12;transform:scale(.5)}50%{opacity:1;transform:scale(1.3)}}
 @keyframes spin      {to{transform:rotate(360deg)}}
-@keyframes pulse     {0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes orb1      {0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.1)}66%{transform:translate(-30px,50px) scale(.95)}}
-@keyframes orb2      {0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,60px) scale(.9)}66%{transform:translate(40px,-30px) scale(1.08)}}
-@keyframes orb3      {0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,30px) scale(1.05)}}
-@keyframes slideDown {from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes shimmer   {0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.4)}70%{box-shadow:0 0 0 10px rgba(248,113,113,0)}}
-@keyframes popIn     {from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-@keyframes glow      {0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes pulse     {0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes orb1      {0%,100%{transform:translate(0,0)}40%{transform:translate(80px,-50px)}70%{transform:translate(-40px,60px)}}
+@keyframes orb2      {0%,100%{transform:translate(0,0)}35%{transform:translate(-60px,70px)}70%{transform:translate(50px,-40px)}}
+@keyframes orb3      {0%,100%{transform:translate(0,0)}50%{transform:translate(35px,35px)}}
+@keyframes slideDown {from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn     {from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
+@keyframes voiceRing {0%{box-shadow:0 0 0 0 rgba(248,113,113,.5)}70%{box-shadow:0 0 0 12px rgba(248,113,113,0)}100%{box-shadow:0 0 0 0 rgba(248,113,113,0)}}
+@keyframes shimmer   {0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}
