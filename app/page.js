@@ -63,9 +63,10 @@ function ModelPicker({model,onChange}){
   )
 }
 
-/* ── Voice input ────────────────────────────────────────────────────────── */
+/* ── Voice input (Google-style full overlay) ────────────────────────────── */
 function VoiceBtn({onResult,disabled,lang,onLangChange}){
   const [listening,setListening]=useState(false)
+  const [interim,setInterim]=useState('')
   const [err,setErr]=useState(null)
   const [showLang,setShowLang]=useState(false)
   const [supported,setSupported]=useState(null)
@@ -80,17 +81,26 @@ function VoiceBtn({onResult,disabled,lang,onLangChange}){
 
   const stop=useCallback(()=>{
     try{recRef.current?.stop()}catch(_){}
-    recRef.current=null;setListening(false)
+    recRef.current=null;setListening(false);setInterim('')
   },[])
 
   const start=useCallback(()=>{
-    if(!supported){setErr('Voice requires Chrome or Edge browser');return}
-    setErr(null)
+    if(!supported){setErr('Voice requires Chrome or Edge');return}
+    setErr(null);setInterim('')
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition
     const rec=new SR()
-    rec.lang=lang;rec.continuous=false;rec.interimResults=false
+    rec.lang=lang;rec.continuous=true;rec.interimResults=true
     rec.onstart=()=>setListening(true)
-    rec.onresult=e=>{const t=e.results[0]?.[0]?.transcript||'';if(t)onResult(t);stop()}
+    rec.onresult=e=>{
+      let final='',inter=''
+      for(let i=0;i<e.results.length;i++){
+        const r=e.results[i]
+        if(r.isFinal) final+=r[0].transcript
+        else inter+=r[0].transcript
+      }
+      setInterim(final+inter)
+      if(final){onResult(final);stop()}
+    }
     rec.onerror=e=>{
       if(e.error!=='aborted'){
         const msgs={'not-allowed':'Allow microphone in browser settings','no-speech':'No speech detected — try again','network':'Network error'}
@@ -98,29 +108,71 @@ function VoiceBtn({onResult,disabled,lang,onLangChange}){
       }
       stop()
     }
-    rec.onend=stop
+    rec.onend=()=>{
+      if(recRef.current){
+        const currentInterim=document.getElementById('vigil-interim')?.textContent||''
+        if(currentInterim) onResult(currentInterim)
+        stop()
+      }
+    }
     recRef.current=rec
-    try{rec.start();setTimeout(stop,15000)}catch(e){setErr('Could not start mic');stop()}
+    try{rec.start();setTimeout(()=>{if(recRef.current){const ci=document.getElementById('vigil-interim')?.textContent||'';if(ci)onResult(ci);stop()}},30000)}catch(e){setErr('Could not start mic');stop()}
   },[supported,lang,onResult,stop])
 
   const curLang=VOICE_LANGS.find(l=>l.code===lang)||VOICE_LANGS[0]
 
   return(
     <div ref={ref} style={{position:'relative',flexShrink:0}}>
+      {/* Mic button */}
       <button onClick={listening?stop:start} disabled={disabled||supported===false} title={listening?'Stop':'Voice input'}
-        style={{width:'38px',height:'38px',borderRadius:'50%',background:listening?'rgba(242,184,181,0.12)':'transparent',border:'none',color:listening?'#F2B8B5':'rgba(255,255,255,0.6)',cursor:disabled?'not-allowed':'pointer',fontSize:'16px',display:'flex',alignItems:'center',justifyContent:'center',animation:listening?'voiceRing 1s ease-in-out infinite':'none',transition:'all .2s'}}
+        style={{width:'38px',height:'38px',borderRadius:'50%',background:listening?'rgba(168,199,250,0.12)':'transparent',border:'none',color:listening?'#A8C7FA':'rgba(255,255,255,0.6)',cursor:disabled?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',transition:'all .2s'}}
         onMouseEnter={e=>{if(!listening)e.currentTarget.style.background='rgba(255,255,255,0.05)'}}
         onMouseLeave={e=>{if(!listening)e.currentTarget.style.background='transparent'}}
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
       </button>
 
-      {listening&&<div style={{position:'absolute',bottom:'calc(100% + 8px)',left:'50%',transform:'translateX(-50%)',padding:'6px 14px',background:'#282A2E',borderRadius:'16px',fontSize:'12px',color:'#F2B8B5',whiteSpace:'nowrap',display:'flex',alignItems:'center',gap:'6px',zIndex:200,boxShadow:'0 4px 16px rgba(0,0,0,0.4)'}}>
-        <span style={{width:'6px',height:'6px',borderRadius:'50%',background:'#F2B8B5',display:'inline-block',animation:'pulse .6s ease-in-out infinite'}}/>
-        Listening…
-      </div>}
+      {/* Language selector */}
+      <button onClick={()=>setShowLang(!showLang)} style={{position:'absolute',top:'-2px',right:'-2px',width:'16px',height:'16px',borderRadius:'50%',background:'#282A2E',border:'none',color:'rgba(255,255,255,0.7)',cursor:'pointer',fontSize:'9px',display:'flex',alignItems:'center',justifyContent:'center'}}>{curLang.flag}</button>
+      {showLang&&(
+        <div style={{position:'absolute',bottom:'calc(100% + 8px)',left:'50%',transform:'translateX(-50%)',width:'160px',background:'#282A2E',borderRadius:'16px',overflow:'hidden',zIndex:500,animation:'popIn .15s ease',boxShadow:'0 8px 32px rgba(0,0,0,0.5)'}}>
+          {VOICE_LANGS.map(l=>(
+            <button key={l.code} onClick={()=>{onLangChange(l.code);setShowLang(false)}}
+              style={{width:'100%',display:'flex',alignItems:'center',gap:'10px',padding:'10px 14px',background:l.code===lang?'rgba(168,199,250,0.1)':'transparent',border:'none',cursor:'pointer',color:l.code===lang?'#A8C7FA':'rgba(255,255,255,0.6)',fontSize:'13px',fontFamily:'inherit',transition:'all .12s',textAlign:'left'}}
+              onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'}
+              onMouseLeave={e=>e.currentTarget.style.background=l.code===lang?'rgba(168,199,250,0.1)':'transparent'}
+            >{l.flag} <span>{l.label}</span>{l.code===lang&&<span style={{marginLeft:'auto',color:'#A8C7FA'}}>✓</span>}</button>
+          ))}
+        </div>
+      )}
 
-      {err&&<div style={{position:'absolute',bottom:'calc(100% + 8px)',left:0,padding:'8px 14px',background:'#282A2E',borderRadius:'16px',fontSize:'12px',color:'#F2B8B5',maxWidth:'250px',lineHeight:'1.5',zIndex:200,boxShadow:'0 4px 16px rgba(0,0,0,0.4)'}}>
+      {/* Full-screen Google-style listening overlay */}
+      {listening&&(
+        <div style={{position:'fixed',inset:0,zIndex:900,background:'rgba(19,19,20,0.95)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',animation:'fadeIn .2s ease'}}>
+          {/* Animated rings */}
+          <div style={{position:'relative',width:'120px',height:'120px',marginBottom:'32px'}}>
+            <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'3px solid rgba(168,199,250,0.15)',animation:'pulse 1.5s ease-in-out infinite'}}/>
+            <div style={{position:'absolute',inset:'15px',borderRadius:'50%',border:'3px solid rgba(168,199,250,0.25)',animation:'pulse 1.5s ease-in-out 0.3s infinite'}}/>
+            <div style={{position:'absolute',inset:'30px',borderRadius:'50%',background:'rgba(168,199,250,0.12)',display:'flex',alignItems:'center',justifyContent:'center',animation:'pulse 1s ease-in-out infinite'}}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A8C7FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
+            </div>
+          </div>
+          
+          <div style={{fontSize:'14px',color:'rgba(255,255,255,0.5)',marginBottom:'16px'}}>{curLang.label} · Listening…</div>
+          
+          {/* Live transcript */}
+          <div id="vigil-interim" style={{fontSize:'22px',color:'#E3E3E3',fontWeight:400,maxWidth:'500px',textAlign:'center',minHeight:'34px',lineHeight:1.4}}>{interim||''}</div>
+
+          {/* Cancel button */}
+          <button onClick={stop} style={{marginTop:'40px',padding:'12px 32px',background:'rgba(255,255,255,0.06)',border:'none',borderRadius:'24px',color:'rgba(255,255,255,0.7)',fontSize:'14px',fontFamily:'inherit',cursor:'pointer',transition:'all .15s'}}
+            onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'}
+            onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.06)'}
+          >Cancel</button>
+        </div>
+      )}
+
+      {/* Error tooltip */}
+      {err&&<div style={{position:'absolute',bottom:'calc(100% + 8px)',left:'50%',transform:'translateX(-50%)',padding:'8px 14px',background:'#282A2E',borderRadius:'16px',fontSize:'12px',color:'#F2B8B5',maxWidth:'250px',lineHeight:'1.5',zIndex:200,boxShadow:'0 4px 16px rgba(0,0,0,0.4)',whiteSpace:'nowrap'}}>
         {err}
         <button onClick={()=>setErr(null)} style={{background:'none',border:'none',color:'#F2B8B5',cursor:'pointer',marginLeft:'8px',fontSize:'12px'}}>✕</button>
       </div>}
@@ -374,7 +426,8 @@ export default function Home(){
   const [mode,     setMode]    = useState('standard')
   const [init,     setInit]    = useState(false)
 
-  const endRef=useRef(null),taRef=useRef(null),abortRef=useRef(null)
+  const endRef=useRef(null),taRef=useRef(null),abortRef=useRef(null),fileRef=useRef(null)
+  const [attachedFile,setAttachedFile]=useState(null) // {name,type,dataUrl,isImage}
   const active=convs.find(c=>c.id===activeId)
   const msgs=active?.messages||[]
 
@@ -442,8 +495,10 @@ export default function Home(){
 
   const send=useCallback(async(override)=>{
     const text=(override||input).trim()
-    if(!text||busy)return
-    setInput('');setBusy(true);setStream('')
+    const hasAttachment=!!attachedFile
+    if(!text&&!hasAttachment||busy)return
+    const imageData=attachedFile?.isImage?attachedFile.dataUrl:null
+    setInput('');setAttachedFile(null);setBusy(true);setStream('')
 
     let cid=activeId,prev=active?.messages||[]
     if(!cid){
@@ -452,9 +507,11 @@ export default function Home(){
       setActive(cid)
     }
 
-    const uMsg={role:'user',content:text,id:uid(),at:new Date()}
+    const msgText=text||(attachedFile?.name?`Analyze this image: ${attachedFile.name}`:'')
+    const uMsg={role:'user',content:msgText,id:uid(),at:new Date(),...(imageData?{imageData}:{})}
     const next=[...prev,uMsg]
-    setConvs(p=>p.map(c=>c.id===cid?{...c,title:prev.length===0?(text.length>46?text.slice(0,46)+'…':text):c.title,messages:next}:c))
+    const titleText=msgText.length>46?msgText.slice(0,46)+'…':msgText
+    setConvs(p=>p.map(c=>c.id===cid?{...c,title:prev.length===0?titleText:c.title,messages:next}:c))
 
     abortRef.current=new AbortController()
     let acc=''
@@ -552,9 +609,32 @@ export default function Home(){
               onFocusCapture={e=>{e.currentTarget.style.background='rgba(255,255,255,0.06)';e.currentTarget.style.boxShadow='0 2px 16px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.05)'}}
               onBlurCapture={e=>{e.currentTarget.style.background='rgba(255,255,255,0.04)';e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.02)'}}
             >
-              <div style={{display:'flex',gap:'6px'}}>
-                <button style={{width:'38px',height:'38px',borderRadius:'50%',background:'transparent',border:'none',color:'rgba(255,255,255,0.6)',cursor:'pointer',fontSize:'18px',display:'flex',alignItems:'center',justifyContent:'center',transition:'all .2s'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.05)'} onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
-                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+              <div style={{display:'flex',gap:'4px',alignItems:'center'}}>
+                {/* Attachment button */}
+                <input ref={fileRef} type="file" accept="image/*,.pdf,.txt,.md,.csv,.json,.js,.py,.ts,.tsx,.html,.css" style={{display:'none'}} onChange={e=>{
+                  const f=e.target.files?.[0]
+                  if(!f)return
+                  const maxMB=5
+                  if(f.size>maxMB*1024*1024){notify(`File too large (max ${maxMB}MB)`);return}
+                  setAttachedFile(f)
+                  if(f.type.startsWith('text/')||f.name.endsWith('.md')||f.name.endsWith('.json')||f.name.endsWith('.js')||f.name.endsWith('.py')||f.name.endsWith('.ts')||f.name.endsWith('.html')||f.name.endsWith('.css')||f.name.endsWith('.csv')){
+                    const reader=new FileReader()
+                    reader.onload=ev=>{
+                      const content=ev.target.result
+                      setInput(p=>`${p?p+'\n\n':''}[File: ${f.name}]\n\`\`\`\n${content.slice(0,8000)}\n\`\`\``)
+                    }
+                    reader.readAsText(f)
+                  } else {
+                    setInput(p=>`${p?p+'\n\n':''}[Attached: ${f.name}]`)
+                  }
+                  notify(`📎 ${f.name}`)
+                  e.target.value=''
+                }}/>
+                <button onClick={()=>fileRef.current?.click()} disabled={busy} title="Attach file" style={{width:'38px',height:'38px',borderRadius:'50%',background:attachedFile?'rgba(168,199,250,0.12)':'transparent',border:'none',color:attachedFile?'#A8C7FA':'rgba(255,255,255,0.6)',cursor:busy?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'center',transition:'all .2s'}}
+                  onMouseEnter={e=>{if(!attachedFile)e.currentTarget.style.background='rgba(255,255,255,0.05)'}}
+                  onMouseLeave={e=>{if(!attachedFile)e.currentTarget.style.background='transparent'}}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
                 </button>
                 <VoiceBtn onResult={t=>setInput(p=>p?p+' '+t:t)} disabled={busy} lang={vlang} onLangChange={setVlang}/>
               </div>
