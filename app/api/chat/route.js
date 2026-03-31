@@ -1,7 +1,8 @@
 import Groq from 'groq-sdk'
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-const SYSTEM = `You are VIGIL — an advanced neural intelligence. Precise, direct, genuinely helpful.
+const SYSTEM_PROMPTS = {
+  standard: `You are VIGIL — an advanced neural intelligence. Precise, direct, genuinely helpful.
 
 LANGUAGE (critical):
 - Detect language from user's message automatically
@@ -15,7 +16,27 @@ FORMAT:
 - Bold → **text** for key terms
 - Numbered lists for sequential steps
 - Bullet points with - for lists
-- Headings with # ## ###`
+- Headings with # ## ###`,
+
+  coder: `You are VIGIL (Coder Mode) — a strict, senior engineering intelligence.
+RULES:
+1. Provide ONLY working, production-ready code in triple backticks unless explanation is strictly necessary.
+2. NO filler words "Here is the code", NO conversational pleasantries.
+3. Prioritize efficiency, security, and best practices.
+4. If there's an error, explain the root cause in 1 sentence, then provide the fix.`,
+
+  creative: `You are VIGIL (Creative Mode) — a brilliant, imaginative storyteller, designer, and ideator.
+RULES:
+1. Use rich, evocative, and inspiring language.
+2. Think radically outside the box, propose unconventional solutions.
+3. Be expressive and match the language/tone of the user.`,
+
+  socratic: `You are VIGIL (Socratic Mode) — an expert mentor and tutor.
+RULES:
+1. NEVER give the direct answer immediately.
+2. Ask probing, guiding questions one at a time to help the user arrive at the answer themselves.
+3. Be encouraging but firm on the Socratic method.`
+}
 
 const MODELS = {
   'llama-3.3-70b-versatile':true,'llama-3.1-8b-instant':true,
@@ -24,8 +45,9 @@ const MODELS = {
 
 export async function POST(req) {
   try {
-    const { messages, model='llama-3.3-70b-versatile' } = await req.json()
+    const { messages, model='llama-3.3-70b-versatile', mode='standard' } = await req.json()
     const safeModel = MODELS[model] ? model : 'llama-3.3-70b-versatile'
+    const sysPrompt = SYSTEM_PROMPTS[mode] || SYSTEM_PROMPTS.standard
     const encoder = new TextEncoder()
     const ts = new TransformStream()
     const writer = ts.writable.getWriter()
@@ -33,7 +55,7 @@ export async function POST(req) {
       try {
         const c = await groq.chat.completions.create({
           model:safeModel, temperature:0.7, max_tokens:2048, stream:true,
-          messages:[{role:'system',content:SYSTEM},...messages.map(m=>({role:m.role,content:m.content}))]
+          messages:[{role:'system',content:sysPrompt},...messages.map(m=>({role:m.role,content:m.content}))]
         })
         for await (const chunk of c) {
           const t=chunk.choices[0]?.delta?.content||''

@@ -3,14 +3,29 @@ import {useState,useRef,useEffect,useCallback} from 'react'
 import MessageContent from '../components/MessageContent'
 import {uid,fmtTime,fmtDate,trunc,exportMd,MODELS,SUGGESTIONS,VOICE_LANGS} from '../lib/utils'
 
+/* ── Constants & Themes ──────────────────────────────────────────────────── */
+const THEMES = {
+  standard: { orb1:'rgba(123,104,238,0.16)', orb2:'rgba(232,121,249,0.1)', orb3:'rgba(45,212,191,0.07)' },
+  coder:    { orb1:'rgba(16,185,129,0.16)',  orb2:'rgba(52,211,153,0.1)',  orb3:'rgba(20,184,166,0.07)' },
+  creative: { orb1:'rgba(236,72,153,0.16)',  orb2:'rgba(244,63,94,0.1)',   orb3:'rgba(217,70,239,0.07)' },
+  socratic: { orb1:'rgba(59,130,246,0.16)',  orb2:'rgba(147,197,253,0.1)', orb3:'rgba(139,92,246,0.07)' }
+}
+const MODES = [
+  {id:'standard', label:'Standard Focus'},
+  {id:'coder',    label:'Coder Focus'},
+  {id:'creative', label:'Creative Focus'},
+  {id:'socratic', label:'Socratic Focus'}
+]
+
 /* ── Aurora ──────────────────────────────────────────────────────────────── */
-function Aurora(){
+function Aurora({theme='standard'}){
+  const t = THEMES[theme] || THEMES.standard
   return(
-    <div style={{position:'fixed',inset:0,zIndex:0,pointerEvents:'none',overflow:'hidden'}}>
+    <div style={{position:'fixed',inset:0,zIndex:0,pointerEvents:'none',overflow:'hidden',transition:'all 1s ease'}}>
       <div style={{position:'absolute',inset:0,background:'#0a0a10'}}/>
-      <div style={{position:'absolute',top:'-20%',left:'5%',width:'650px',height:'650px',borderRadius:'50%',background:'radial-gradient(circle,rgba(123,104,238,0.16) 0%,transparent 65%)',filter:'blur(55px)',animation:'orb1 20s ease-in-out infinite'}}/>
-      <div style={{position:'absolute',bottom:'-15%',right:'0%',width:'550px',height:'550px',borderRadius:'50%',background:'radial-gradient(circle,rgba(232,121,249,0.1) 0%,transparent 65%)',filter:'blur(55px)',animation:'orb2 24s ease-in-out infinite'}}/>
-      <div style={{position:'absolute',top:'35%',right:'20%',width:'380px',height:'380px',borderRadius:'50%',background:'radial-gradient(circle,rgba(45,212,191,0.07) 0%,transparent 65%)',filter:'blur(45px)',animation:'orb3 16s ease-in-out infinite'}}/>
+      <div style={{position:'absolute',top:'-20%',left:'5%',width:'650px',height:'650px',borderRadius:'50%',background:`radial-gradient(circle,${t.orb1} 0%,transparent 65%)`,filter:'blur(55px)',animation:'orb1 20s ease-in-out infinite',transition:'background 1.5s ease'}}/>
+      <div style={{position:'absolute',bottom:'-15%',right:'0%',width:'550px',height:'550px',borderRadius:'50%',background:`radial-gradient(circle,${t.orb2} 0%,transparent 65%)`,filter:'blur(55px)',animation:'orb2 24s ease-in-out infinite',transition:'background 1.5s ease'}}/>
+      <div style={{position:'absolute',top:'35%',right:'20%',width:'380px',height:'380px',borderRadius:'50%',background:`radial-gradient(circle,${t.orb3} 0%,transparent 65%)`,filter:'blur(45px)',animation:'orb3 16s ease-in-out infinite',transition:'background 1.5s ease'}}/>
     </div>
   )
 }
@@ -164,7 +179,7 @@ function Msg({msg,streaming,streamText,onCopy,onStar,starred,isLast,onRegen}){
           <span style={{fontSize:'11px',color:'rgba(255,255,255,0.18)',fontFamily:'JetBrains Mono,monospace'}}>{fmtTime(msg.at)}</span>
           {starred&&<span style={{fontSize:'12px',color:'#fbbf24'}}>★</span>}
         </div>
-        {streaming&&!streamText?<Dots/>:<>
+        {streaming&&!streamText?<div style={{display:'flex',gap:'10px',alignItems:'center'}}><Dots/><span style={{fontSize:'12px',color:'rgba(255,255,255,0.3)',fontFamily:'JetBrains Mono,monospace'}}>Thinking...</span></div>:<>
           <MessageContent text={text}/>
           {streaming&&<span style={{display:'inline-block',width:'2px',height:'17px',background:'#7b68ee',marginLeft:'2px',verticalAlign:'text-bottom',animation:'blink .85s step-end infinite'}}/>}
         </>}
@@ -372,7 +387,7 @@ function Toast({msg}){
 }
 
 /* ── Settings panel ──────────────────────────────────────────────────────── */
-function Settings({open,onClose,model,onModel,temp,onTemp}){
+function Settings({open,onClose,model,onModel,temp,onTemp,mode,onMode,onClear}){
   if(!open)return null
   return(
     <div style={{position:'fixed',inset:0,zIndex:500,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,0.6)',backdropFilter:'blur(8px)',animation:'fadeIn .2s ease'}} onClick={onClose}>
@@ -403,6 +418,19 @@ function Settings({open,onClose,model,onModel,temp,onTemp}){
             <span>precise</span><span>creative</span>
           </div>
         </div>
+
+        <div style={{marginBottom:'18px', borderTop:'1px solid rgba(255,255,255,0.1)', paddingTop:'18px'}}>
+          <div style={{fontSize:'11px',color:'rgba(255,255,255,0.3)',letterSpacing:'0.12em',fontFamily:'JetBrains Mono,monospace',marginBottom:'8px'}}>FOCUS MODE</div>
+          {MODES.map(m=>(
+            <button key={m.id} onClick={()=>onMode(m.id)} style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 13px',background:m.id===mode?'rgba(52,211,153,0.15)':'rgba(255,255,255,0.04)',border:`1px solid ${m.id===mode?'rgba(52,211,153,0.3)':'rgba(255,255,255,0.07)'}`,borderRadius:'10px',cursor:'pointer',color:m.id===mode?'#34d399':'rgba(255,255,255,0.5)',fontSize:'13px',fontFamily:'inherit',transition:'all .12s',textAlign:'left',marginBottom:'4px'}}>
+              <span>{m.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <div style={{ borderTop:'1px solid rgba(255,255,255,0.1)', paddingTop:'18px'}}>
+           <button onClick={()=>{onClear();onClose()}} style={{width:'100%',padding:'10px',background:'rgba(248,113,113,0.1)',border:'1px solid rgba(248,113,113,0.25)',borderRadius:'10px',color:'#f87171',cursor:'pointer',fontSize:'13px'}}>Clear All Data</button>
+        </div>
       </div>
     </div>
   )
@@ -424,6 +452,8 @@ export default function Home(){
   const [search,   setSearch]  = useState('')
   const [view,     setView]    = useState('chats')
   const [settings, setSettings]= useState(false)
+  const [mode,     setMode]    = useState('standard')
+  const [init,     setInit]    = useState(false)
 
   const endRef=useRef(null),taRef=useRef(null),abortRef=useRef(null)
   const active=convs.find(c=>c.id===activeId)
@@ -435,6 +465,29 @@ export default function Home(){
   useEffect(()=>{
     if(taRef.current){taRef.current.style.height='auto';taRef.current.style.height=Math.min(taRef.current.scrollHeight,200)+'px'}
   },[input])
+
+  useEffect(()=>{
+    if(typeof window!=='undefined'){
+      try{
+        const savedConvs=localStorage.getItem('vigil_convs'), savedStarred=localStorage.getItem('vigil_star'), savedId=localStorage.getItem('vigil_active'), savedMode=localStorage.getItem('vigil_mode')
+        if(savedConvs) setConvs(JSON.parse(savedConvs).map(c=>({...c,at:new Date(c.at),messages:c.messages.map(m=>({...m,at:new Date(m.at)}))})))
+        if(savedStarred) setStarred(JSON.parse(savedStarred))
+        if(savedId) setActive(savedId)
+        if(savedMode) setMode(savedMode)
+      }catch(e){}
+      setInit(true)
+    }
+  },[])
+
+  useEffect(()=>{
+    if(init && typeof window!=='undefined'){
+      localStorage.setItem('vigil_convs',JSON.stringify(convs))
+      localStorage.setItem('vigil_star',JSON.stringify(starred))
+      if(activeId) localStorage.setItem('vigil_active',activeId)
+      else localStorage.removeItem('vigil_active')
+      localStorage.setItem('vigil_mode',mode)
+    }
+  },[convs,starred,activeId,mode,init])
 
   const newConv=useCallback(()=>{
     const id=uid()
@@ -460,6 +513,14 @@ export default function Home(){
     setStarred(p=>{const n={...p,[id]:!p[id]};notify(n[id]?'Starred ★':'Unstarred');return n})
   },[])
 
+  const clearData=useCallback(()=>{
+    if(confirm('Are you sure you want to clear all data? This cannot be undone.')){
+      setConvs([]); setActive(null); setStarred({}); setMode('standard')
+      localStorage.removeItem('vigil_convs'); localStorage.removeItem('vigil_star'); localStorage.removeItem('vigil_active')
+      notify('All data cleared')
+    }
+  },[])
+
   const send=useCallback(async(override)=>{
     const text=(override||input).trim()
     if(!text||busy)return
@@ -479,7 +540,7 @@ export default function Home(){
     abortRef.current=new AbortController()
     let acc=''
     try{
-      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:next,model}),signal:abortRef.current.signal})
+      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:next,model,mode}),signal:abortRef.current.signal})
       if(!res.ok)throw new Error(`HTTP ${res.status}`)
       const reader=res.body.getReader(),dec=new TextDecoder()
       while(true){
@@ -496,7 +557,7 @@ export default function Home(){
 
     setConvs(p=>p.map(c=>c.id===cid?{...c,messages:[...next,{role:'assistant',content:acc||'(no response)',id:uid(),at:new Date()}]}:c))
     setStream('');setBusy(false)
-  },[input,busy,activeId,active,model])
+  },[input,busy,activeId,active,model,mode])
 
   const regen=useCallback(async()=>{
     if(!active||busy)return
@@ -513,7 +574,7 @@ export default function Home(){
 
   return(
     <div style={{display:'flex',height:'100dvh',background:'#0a0a10',overflow:'hidden',position:'relative'}}>
-      <Aurora/>
+      {init && <Aurora theme={mode}/>}
 
       {/* Sidebar */}
       <div style={{width:sidebar?'260px':'0',minWidth:sidebar?'260px':'0',overflow:'hidden',transition:'all .28s cubic-bezier(.4,0,.2,1)',flexShrink:0,zIndex:10,position:'relative'}}>
@@ -599,7 +660,7 @@ export default function Home(){
         </div>
       </div>
 
-      <Settings open={settings} onClose={()=>setSettings(false)} model={model} onModel={setModel} temp={temp} onTemp={setTemp}/>
+      <Settings open={settings} onClose={()=>setSettings(false)} model={model} onModel={setModel} temp={temp} onTemp={setTemp} mode={mode} onMode={setMode} onClear={clearData}/>
       <Toast msg={toast}/>
     </div>
   )
