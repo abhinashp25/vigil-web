@@ -1,22 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --bg:      #0a0a10;
-  --bg2:     #0f0f18;
-  --bg3:     #14142a;
-  --glass:   rgba(255,255,255,0.04);
-  --glass2:  rgba(255,255,255,0.07);
+  --bg:      #131314;
+  --bg2:     #1E1F22;
+  --bg3:     #282A2E;
+  --glass:   rgba(255,255,255,0.03);
+  --glass2:  rgba(255,255,255,0.06);
   --glassbd: rgba(255,255,255,0.08);
-  --acc:     #7b68ee;
-  --acc2:    #9d8fff;
-  --accs:    rgba(123,104,238,0.15);
-  --accs2:   rgba(123,104,238,0.28);
-  --t1:      #f0f0fa;
-  --t2:      #9090b8;
-  --t3:      #48486a;
-  --t4:      #202038;
-  --green:   #34d399;
-  --red:     #f87171;
+  --acc:     #A8C7FA;
+  --acc2:    #D3E3FD;
+  --accs:    rgba(168,199,250,0.15);
+  --accs2:   rgba(168,199,250,0.28);
+  --t1:      #E3E3E3;
+  --t2:      #C4C7C5;
+  --t3:      #8E918F;
+  --t4:      #444746;
+  --green:   #6DD68C;
+  --red:     #F2B8B5;
   --r-sm:    8px;
   --r-md:    12px;
   --r-lg:    18px;
@@ -24,12 +24,12 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--t1);font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow:hidden}
-::-webkit-scrollbar{width:3px}
+html,body{height:100%;background:var(--bg);color:var(--t1);font-family:'Outfit','Inter',-apple-system,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow:hidden}
+::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(123,104,238,0.25);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(123,104,238,0.5)}
-::selection{background:rgba(123,104,238,0.3);color:var(--t1)}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.25)}
+::selection{background:rgba(168,199,250,0.3);color:var(--t1)}
 
 @keyframes fadeUp    {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn    {from{opacity:0}to{opacity:1}}
